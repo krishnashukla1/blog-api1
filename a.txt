@@ -1,0 +1,382 @@
+npm install express mongoose bcryptjs jsonwebtoken dotenv express-rate-limit
+
+REGISTER USER
+
+POST---->  http://localhost:3000/api/users/register
+
+{
+  "name": "Krishna Shukla",
+  "email": "krishna@gmail.com",
+  "password": "password123"
+}
+
+{
+    "status": 201,
+    "success": true,
+    "message": "User registered successfully",
+    "user": {
+        "id": "682db6db46efac2f02767cb0",
+        "name": "Krishna Shukla",
+        "email": "krishna@gmail.com"
+    }
+}
+--------------------------------
+
+LOGIN USER 
+
+POST---> http://localhost:3000/api/users/login
+
+{
+"email": "krishna@gmail.com",
+  "password": "password123"
+}
+
+{
+    "status": 200,
+    "success": true,
+    "message": "Login successful",
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MmRiNmRiNDZlZmFjMmYwMjc2N2NiMCIsIm5hbWUiOiJLcmlzaG5hIFNodWtsYSIsImlhdCI6MTc0NzgzMDgwMCwiZXhwIjoxNzQ3ODM0NDAwfQ.6_5zjB4LQRwL3PcZdggruT8ImjHATQLPKNEMp5GJe6M",
+    "user": {
+        "id": "682db6db46efac2f02767cb0",
+        "name": "Krishna Shukla",
+        "email": "krishna@gmail.com"
+    }
+}
+-------------------------------------------
+
+BLOG POSTS 
+POST---> http://localhost:3000/api/posts
+
+{
+  "title": "My Second Post",
+  "content": "This is the content of my first post.",
+  "tags": ["tech", "blog"],
+  "authorId": "682db6db46efac2f02767cb0"
+}
+
+in Headers
+Authorization    Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MmRiNmRiNDZlZmFjMmYwMjc2N2NiMCIsIm5hbWUiOiJLcmlzaG5hIFNodWtsYSIsImlhdCI6MTc0NzgzMDgwMCwiZXhwIjoxNzQ3ODM0NDAwfQ.6_5zjB4LQRwL3PcZdggruT8ImjHATQLPKNEMp5GJe6M
+
+
+{
+    "status": 201,
+    "success": true,
+    "message": "Post created successfully",
+    "post": {
+        "title": "My Second Post",
+        "content": "This is the content of my first post.",
+        "tags": [
+            "tech",
+            "blog"
+        ],
+        "authorId": "682db6db46efac2f02767cb0",
+        "_id": "682dc826ba552f1107390f0e",
+        "createdAt": "2025-05-21T12:33:42.199Z",
+        "updatedAt": "2025-05-21T12:33:42.199Z",
+        "__v": 0
+    }
+}
+----------------------------------------
+
+GET ALL POSTS
+
+GET----> http://localhost:3000/api/posts?page=1&limit=10
+
+{
+    "status": 200,
+    "success": true,
+    "message": "Posts fetched successfully",
+    "currentPage": 1,
+    "totalPages": 1,
+    "totalPosts": 3,
+    "posts": [
+        {
+            "_id": "682dbf224d834294e7c75ca9",
+            "title": "Updated Post Title",
+            "content": "Updated content of the post.",
+            "tags": [
+                "tech",
+                "update"
+            ],
+            "authorId": {
+                "_id": "682db6db46efac2f02767cb0",
+                "name": "Krishna Shukla"
+            },
+            "createdAt": "2025-05-21T11:55:14.081Z",
+            "updatedAt": "2025-05-21T12:02:32.512Z",
+            "__v": 1
+        },
+        {
+            "_id": "682dbf634d834294e7c75cab",
+            "title": "My First Post",
+            "content": "This is the content of my first post.",
+            "tags": [
+                "tech",
+                "blog"
+            ],
+            "authorId": {
+                "_id": "682db6db46efac2f02767cb0",
+                "name": "Krishna Shukla"
+            },
+            "createdAt": "2025-05-21T11:56:19.704Z",
+            "updatedAt": "2025-05-21T11:56:19.704Z",
+            "__v": 0
+        },
+        {
+            "_id": "682dc826ba552f1107390f0e",
+            "title": "My Second Post",
+            "content": "This is the content of my first post.",
+            "tags": [
+                "tech",
+                "blog"
+            ],
+            "authorId": {
+                "_id": "682db6db46efac2f02767cb0",
+                "name": "Krishna Shukla"
+            },
+            "createdAt": "2025-05-21T12:33:42.199Z",
+            "updatedAt": "2025-05-21T12:33:42.199Z",
+            "__v": 0
+        }
+    ]
+}
+-----------------------------------
+
+GET SINGLE POST 
+
+GET---> http://localhost:3000/api/posts/:postId
+        http://localhost:3000/api/posts/682dbf224d834294e7c75ca9
+
+------------------------------------
+UPDATE POST 
+
+PUT----> http://localhost:3000/api/posts/682dbf224d834294e7c75ca9
+
+in Headers
+Authorization    Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MmRiNmRiNDZlZmFjMmYwMjc2N2NiMCIsIm5hbWUiOiJLcmlzaG5hIFNodWtsYSIsImlhdCI6MTc0NzgzMDgwMCwiZXhwIjoxNzQ3ODM0NDAwfQ.6_5zjB4LQRwL3PcZdggruT8ImjHATQLPKNEMp5GJe6M
+
+{
+  "title": "Updated Post Title",
+  "content": "Updated content of the post.",
+  "tags": ["tech", "update"]
+}
+
+{
+    "status": 200,
+    "success": true,
+    "message": "Post updated successfully",
+    "post": {
+        "_id": "682dbf224d834294e7c75ca9",
+        "title": "Updated Post Title",
+        "content": "Updated content of the post.",
+        "tags": [
+            "tech",
+            "update"
+        ],
+        "authorId": "682db6db46efac2f02767cb0",
+        "createdAt": "2025-05-21T11:55:14.081Z",
+        "updatedAt": "2025-05-21T12:02:32.512Z",
+        "__v": 1
+    }
+}
+---------------------------------------
+DELETE POST 
+
+DELETE ----> http://localhost:3000/api/posts/:postId
+
+            http://localhost:3000/api/posts/682dbf224d834294e7c75ca9
+
+in Headers
+Authorization    Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MmRiNmRiNDZlZmFjMmYwMjc2N2NiMCIsIm5hbWUiOiJLcmlzaG5hIFNodWtsYSIsImlhdCI6MTc0NzgzMDgwMCwiZXhwIjoxNzQ3ODM0NDAwfQ.6_5zjB4LQRwL3PcZdggruT8ImjHATQLPKNEMp5GJe6M
+
+------------------------------------------
+
+ADD COMMENT 
+
+POST---> http://localhost:3000/api/comments
+
+in Headers
+Authorization    Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MmRiNmRiNDZlZmFjMmYwMjc2N2NiMCIsIm5hbWUiOiJLcmlzaG5hIFNodWtsYSIsImlhdCI6MTc0NzgzMDgwMCwiZXhwIjoxNzQ3ODM0NDAwfQ.6_5zjB4LQRwL3PcZdggruT8ImjHATQLPKNEMp5GJe6M
+
+{
+  "text": "This is a great post!",
+  "postId": "682dbf224d834294e7c75ca9" //post id
+}
+
+{
+    "status": 201,
+    "success": true,
+    "message": "Comment created successfully",
+    "comment": {
+        "text": "This is a great post!",
+        "authorId": "682db6db46efac2f02767cb0",
+        "postId": "682dbf224d834294e7c75ca9",
+        "_id": "682dc30c4d834294e7c75cb5",
+        "createdAt": "2025-05-21T12:11:56.529Z",
+        "updatedAt": "2025-05-21T12:11:56.529Z",
+        "__v": 0
+    }
+}
+-----------------------------------
+LIST COMMENTS FOR POST 
+
+GET----> http://localhost:3000/api/comments?postId=682dbf224d834294e7c75ca9&page=1&limit=10
+
+{
+    "status": 200,
+    "success": true,
+    "message": "Comments fetched successfully",
+    "currentPage": 1,
+    "totalPages": 1,
+    "totalComments": 1,
+    "comments": [
+        {
+            "_id": "682dc30c4d834294e7c75cb5",
+            "text": "This is a great post!",
+            "authorId": {
+                "_id": "682db6db46efac2f02767cb0",
+                "name": "Krishna Shukla"
+            },
+            "postId": "682dbf224d834294e7c75ca9",
+            "createdAt": "2025-05-21T12:11:56.529Z",
+            "updatedAt": "2025-05-21T12:11:56.529Z",
+            "__v": 0
+        }
+    ]
+}
+--------------------------------------
+DELETE COMMENT 
+
+DELETE---> http://localhost:3000/api/comments/:commentId
+
+http://localhost:3000/api/comments/682dc30c4d834294e7c75cb5
+
+in Headers
+Authorization    Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MmRiNmRiNDZlZmFjMmYwMjc2N2NiMCIsIm5hbWUiOiJLcmlzaG5hIFNodWtsYSIsImlhdCI6MTc0NzgzMDgwMCwiZXhwIjoxNzQ3ODM0NDAwfQ.6_5zjB4LQRwL3PcZdggruT8ImjHATQLPKNEMp5GJe6M
+
+
+------------------------------------
+SEARCH POSTS BY KEYWORD
+
+GET----> http://localhost:3000/api/posts/search?keyword=post&page=1&limit=10
+
+{
+    "status": 200,
+    "success": true,
+    "message": "Posts fetched successfully",
+    "currentPage": 1,
+    "totalPages": 1,
+    "totalPosts": 3,
+    "posts": [
+        {
+            "_id": "682dbf224d834294e7c75ca9",
+            "title": "Updated Post Title",
+            "content": "Updated content of the post.",
+            "tags": [
+                "tech",
+                "update"
+            ],
+            "authorId": {
+                "_id": "682db6db46efac2f02767cb0",
+                "name": "Krishna Shukla"
+            },
+            "createdAt": "2025-05-21T11:55:14.081Z",
+            "updatedAt": "2025-05-21T12:02:32.512Z",
+            "__v": 1
+        },
+        {
+            "_id": "682dbf634d834294e7c75cab",
+            "title": "My First Post",
+            "content": "This is the content of my first post.",
+            "tags": [
+                "tech",
+                "blog"
+            ],
+            "authorId": {
+                "_id": "682db6db46efac2f02767cb0",
+                "name": "Krishna Shukla"
+            },
+            "createdAt": "2025-05-21T11:56:19.704Z",
+            "updatedAt": "2025-05-21T11:56:19.704Z",
+            "__v": 0
+        },
+        {
+            "_id": "682dc826ba552f1107390f0e",
+            "title": "My Second Post",
+            "content": "This is the content of my first post.",
+            "tags": [
+                "tech",
+                "blog"
+            ],
+            "authorId": {
+                "_id": "682db6db46efac2f02767cb0",
+                "name": "Krishna Shukla"
+            },
+            "createdAt": "2025-05-21T12:33:42.199Z",
+            "updatedAt": "2025-05-21T12:33:42.199Z",
+            "__v": 0
+        }
+    ]
+}
+----------------------------------
+FILTER POSTS BY TAG 
+GET---> http://localhost:3000/api/posts/filter?tag=tech&page=1&limit=10
+
+{
+    "status": 200,
+    "success": true,
+    "message": "Posts fetched successfully",
+    "currentPage": 1,
+    "totalPages": 1,
+    "totalPosts": 3,
+    "posts": [
+        {
+            "_id": "682dbf224d834294e7c75ca9",
+            "title": "Updated Post Title",
+            "content": "Updated content of the post.",
+            "tags": [
+                "tech",
+                "update"
+            ],
+            "authorId": {
+                "_id": "682db6db46efac2f02767cb0",
+                "name": "Krishna Shukla"
+            },
+            "createdAt": "2025-05-21T11:55:14.081Z",
+            "updatedAt": "2025-05-21T12:02:32.512Z",
+            "__v": 1
+        },
+        {
+            "_id": "682dbf634d834294e7c75cab",
+            "title": "My First Post",
+            "content": "This is the content of my first post.",
+            "tags": [
+                "tech",
+                "blog"
+            ],
+            "authorId": {
+                "_id": "682db6db46efac2f02767cb0",
+                "name": "Krishna Shukla"
+            },
+            "createdAt": "2025-05-21T11:56:19.704Z",
+            "updatedAt": "2025-05-21T11:56:19.704Z",
+            "__v": 0
+        },
+        {
+            "_id": "682dc826ba552f1107390f0e",
+            "title": "My Second Post",
+            "content": "This is the content of my first post.",
+            "tags": [
+                "tech",
+                "blog"
+            ],
+            "authorId": {
+                "_id": "682db6db46efac2f02767cb0",
+                "name": "Krishna Shukla"
+            },
+            "createdAt": "2025-05-21T12:33:42.199Z",
+            "updatedAt": "2025-05-21T12:33:42.199Z",
+            "__v": 0
+        }
+    ]
+}
